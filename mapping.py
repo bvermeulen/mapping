@@ -1,11 +1,11 @@
-'''  geopandas mapping
-'''
 # import os
-import pandas as pd
-import matplotlib.pyplot as plt
-from shapely.geometry import Point
+# import pandas as pd
 # os.environ['GDAL_DATA'] = os.environ['CONDA_PREFIX'] + r'\Library\share\gdal'
 # os.environ['PROJ_LIB'] = os.environ['CONDA_PREFIX'] + r'\Library\share'
+'''  geopandas mapping
+'''
+import matplotlib.pyplot as plt
+from shapely.geometry import Point
 import geopandas as gpd
 import psycopg2
 
@@ -83,26 +83,27 @@ class WorldMap:
         self.pictures = gpd.GeoDataFrame(geometry=pic_locations)
 
     def plot(self):
-        fig, (ax0, ax1) = plt.subplots(nrows=1, ncols=2, figsize=(8, 6))
+        _, (ax0, ax1) = plt.subplots(nrows=1, ncols=2, figsize=(8, 6))
         ax0.set_aspect('equal')
         ax1.set_aspect('equal')
 
         self.world.plot(ax=ax0, color='white', edgecolor='black')
         self.pictures.plot(ax=ax0, marker='o', color='blue', markersize=5)
 
-        nld = self.world[(self.world.name == 'Netherlands')]
-        ams = self.cities[(self.cities.name == 'Amsterdam')]
+        country = self.world[(self.world.name == 'Thailand')]
+        capital = self.cities[(self.cities.name == 'Bangkok')]
 
-        xmin, ymin, xmax, ymax = nld.total_bounds
+        xmin, ymin, xmax, ymax = country.total_bounds
         pictures_nld = self.pictures.cx[xmin:xmax, ymin:ymax]
 
-        nld.plot(ax=ax1, color='white', edgecolor='black')
+        country.plot(ax=ax1, color='white', edgecolor='black')
         pictures_nld.plot(ax=ax1, marker='o', color='blue', markersize=5)
+        capital.plot(ax=ax1, marker='+', color='red', markersize=50)
 
         plt.show()
 
 
 if __name__ == '__main__':
     world = WorldMap()
-    print(world.world.head(100))
+    print(world.pictures)
     world.plot()
