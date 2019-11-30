@@ -1,6 +1,5 @@
 import geopandas as gpd
 import matplotlib.pyplot as plt
-# from PIL import Image
 import contextily as ctx
 from shapely.geometry import Point
 import psycopg2
@@ -20,10 +19,9 @@ class MapTools:
         self.fig, self.ax = plt.subplots(nrows=1, ncols=1, figsize=figsize)
         self.callbacks_connect()
 
-        # get initial extent of all pictures
+        # get extent of the map for all pictures
         self.pictures.plot(ax=self.ax)
         self.plot_area = self.ax.axis()
-
 
     def convert_to_osm(self, df):
         return df.to_crs(epsg=EPSG_OSM)
@@ -52,19 +50,25 @@ class MapTools:
             self.on_lim_change()
 
     def on_lim_change(self):
+        pass
         xlim = self.ax.get_xlim()
         ylim = self.ax.get_ylim()
         self.plot_area = (*xlim, *ylim)
         self.blit_map()
 
     def add_base_map_osm(self):
-        # ctx.add_basemap(self.ax)
-        zoom = 13
+        # ctx.add_basemap(self.ax, url=ctx.providers.Stamen.TonerLite)
+        if abs(self.plot_area[1] - self.plot_area[0]) < 100:
+            zoom = 13
+
+        else:
+            zoom = 'auto'
+
         try:
             basemap, extent = ctx.bounds2img(
                 self.plot_area[0], self.plot_area[2],
                 self.plot_area[1], self.plot_area[3],
-                zoom='auto',
+                zoom=zoom,
                 url=osm_url,)
             self.ax.imshow(basemap, extent=extent, interpolation='bilinear')
 
@@ -124,7 +128,7 @@ class PicBase:
                     latitude = cls.convert_gps_to_decimal_degrees(record[1])
                     longitude = cls.convert_gps_to_decimal_degrees(record[2])
 
-                    picture_locations.append(Point(latitude, longitude))
+                    picture_locations.append(Point(longitude, latitude))
 
         return picture_locations
 
