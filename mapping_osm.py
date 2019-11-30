@@ -59,11 +59,16 @@ class MapTools:
 
     def add_base_map_osm(self):
         # ctx.add_basemap(self.ax)
-        basemap, extent = ctx.bounds2img(
-            self.plot_area[0], self.plot_area[2],
-            self.plot_area[1], self.plot_area[3],
-            url=osm_url)
-        self.ax.imshow(basemap, extent=extent, interpolation='bilinear')
+        try:
+            basemap, extent = ctx.bounds2img(
+                self.plot_area[0], self.plot_area[2],
+                self.plot_area[1], self.plot_area[3],
+                zoom='auto',
+                url=osm_url)
+            self.ax.imshow(basemap, extent=extent, interpolation='bilinear')
+
+        except Exception as e:  #pylint: disable=broad-except
+            print(f'unable to get map: {e}')
 
     def blit_map(self):
         self.ax.cla()
@@ -128,8 +133,8 @@ class PicBase:
         ref = lat_long_value.get('ref', '')
         fractions = lat_long_value.get('pos', ([0, 1], [0, 1], [0, 1]))
         degrees = fractions[0][0] / fractions[0][1]
-        seconds = fractions[1][0] / fractions[1][1]
-        minutes = fractions[2][0] / fractions[2][1]
+        minutes = fractions[1][0] / fractions[1][1]
+        seconds = fractions[2][0] / fractions[2][1]
 
         if fractions[1][0] == 0 and fractions[2][0] == 0:
             if ref in ['S', 'W']:
