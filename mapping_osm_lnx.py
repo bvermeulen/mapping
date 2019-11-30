@@ -50,7 +50,6 @@ class MapTools:
             self.on_lim_change()
 
     def on_lim_change(self):
-        pass
         xlim = self.ax.get_xlim()
         ylim = self.ax.get_ylim()
         self.plot_area = (*xlim, *ylim)
@@ -128,7 +127,7 @@ class PicBase:
                     latitude = cls.convert_gps_to_decimal_degrees(record[1])
                     longitude = cls.convert_gps_to_decimal_degrees(record[2])
 
-                    picture_locations.append(Point(longitude, latitude))
+                    picture_locations.append(Point(latitude, longitude))
 
         return picture_locations
 
