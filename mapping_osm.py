@@ -60,12 +60,16 @@ class MapTools:
     def add_base_map_osm(self):
         # ctx.add_basemap(self.ax)
         zoom = 13
-        basemap, extent = ctx.bounds2img(
-            self.plot_area[0], self.plot_area[2],
-            self.plot_area[1], self.plot_area[3],
-            zoom=zoom,
-            url=osm_url,)
-        self.ax.imshow(basemap, extent=extent, interpolation='bilinear')
+        try:
+            basemap, extent = ctx.bounds2img(
+                self.plot_area[0], self.plot_area[2],
+                self.plot_area[1], self.plot_area[3],
+                zoom='auto',
+                url=osm_url,)
+            self.ax.imshow(basemap, extent=extent, interpolation='bilinear')
+
+        except Exception as e:
+            print(f'unable to load map: {e}')
 
     def blit_map(self):
         self.ax.cla()
