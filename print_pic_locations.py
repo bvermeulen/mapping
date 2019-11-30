@@ -1,5 +1,5 @@
 import geopandas as gpd
-import mapping_osm as mp
+import mapping_osm_win as mp
 
 pic_locations = gpd.GeoDataFrame(geometry=mp.PicBase().get_meta_data())
 
