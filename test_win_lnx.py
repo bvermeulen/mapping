@@ -11,7 +11,7 @@ world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
 _, ax = plt.subplots(figsize=(8, 6))
 
-ax.set_title('Windows: latitude = 45, longitude = -45\n'
+ax.set_title('Linux: latitude = 45, longitude = -45\n'
              'Point(latitude, longitude)')
 world.plot(ax=ax, color='white', edgecolor='black')
 my_location.plot(ax=ax, color='red', markersize=20)

@@ -72,7 +72,7 @@ class MapTools:
                 url=osm_url,)
             self.ax.imshow(basemap, extent=extent, interpolation='bilinear')
 
-        except Exception as e:
+        except Exception as e:  #pylint: disable=broad-except
             print(f'unable to load map: {e}')
 
     def blit_map(self):
@@ -161,7 +161,6 @@ class PicBase:
 def main():
     pic_locations = gpd.GeoDataFrame(geometry=PicBase().get_meta_data())
     map_tools = MapTools(pic_locations)
-    # map_tools.blit_map()
     map_tools.show()
 
 if __name__ == '__main__':
