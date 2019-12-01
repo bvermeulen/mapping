@@ -127,7 +127,7 @@ class PicBase:
                     latitude = cls.convert_gps_to_decimal_degrees(record[1])
                     longitude = cls.convert_gps_to_decimal_degrees(record[2])
 
-                    picture_locations.append(Point(latitude, longitude))
+                    picture_locations.append(Point(longitude, latitude))
 
         return picture_locations
 
