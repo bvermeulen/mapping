@@ -11,8 +11,8 @@ my_location = gpd.GeoDataFrame(geometry=[Point(longitude, latitude)])
 geom = my_location.loc[0].geometry
 print(f'long: {geom.x:15.4f}, lat: {geom.y:15.4f}')
 
-my_location.crs = EPSG_WGS84
-my_location = my_location.to_crs(epsg=EPSG_OSM)
+my_location.crs = f'epsg:{EPSG_WGS84}'
+my_location = my_location.to_crs(f'epsg:{EPSG_OSM}')
 
 geom = my_location.loc[0].geometry
 print(f'x   : {geom.x:15.4f}, y  : {geom.y:15.4f}')

@@ -13,7 +13,7 @@ EPSG_WGS84 = 4326
 class MapTools:
     def __init__(self, pictures):
         self.pictures = pictures
-        self.pictures.crs = EPSG_WGS84
+        self.pictures.crs = f'epsg:{EPSG_WGS84}'
         self.pictures = self.convert_to_osm(self.pictures)
 
         self.fig, self.ax = plt.subplots(nrows=1, ncols=1, figsize=figsize)
@@ -24,7 +24,7 @@ class MapTools:
         self.plot_area = self.ax.axis()
 
     def convert_to_osm(self, df):
-        return df.to_crs(epsg=EPSG_OSM)
+        return df.to_crs(f'epsg:{EPSG_OSM}')
 
     def callbacks_connect(self):
         self.zoomcallx = self.ax.callbacks.connect(

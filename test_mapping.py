@@ -76,4 +76,4 @@ def test_gps_to_decimal_degrees_n_d():
 
 
 if __name__ == '__main__':
-    test_gps_to_decimal_degrees()
+    test_gps_to_decimal_degrees_e_d_m_s()
