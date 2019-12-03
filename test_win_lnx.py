@@ -1,19 +1,34 @@
-import matplotlib.pyplot as plt
 import geopandas as gpd
 from shapely.geometry import Point
 
+EPSG_OSM = 3857
+EPSG_WGS84 = 4326
 
-latitude = 45
-longitude = -45
-my_location = gpd.GeoDataFrame(geometry=[Point(latitude, longitude)])
+longitude = 45
+latitude = 0
+my_location = gpd.GeoDataFrame(geometry=[Point(longitude, latitude)])
 
-world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+geom = my_location.loc[0].geometry
+print(f'long: {geom.x:15.4f}, lat: {geom.y:15.4f}')
 
-_, ax = plt.subplots(figsize=(8, 6))
+my_location.crs = EPSG_WGS84
+my_location = my_location.to_crs(epsg=EPSG_OSM)
 
-ax.set_title('Linux: latitude = 45, longitude = -45\n'
-             'Point(latitude, longitude)')
-world.plot(ax=ax, color='white', edgecolor='black')
-my_location.plot(ax=ax, color='red', markersize=20)
+geom = my_location.loc[0].geometry
+print(f'x   : {geom.x:15.4f}, y  : {geom.y:15.4f}')
 
-plt.show()
+'''
+Linux
+long:          0.0000, lat:        -45.0000
+x   :          0.0000, y  :   -5621521.4862
+
+long:         45.0000, lat:          0.0000
+x   :    5009377.0857, y  :          0.0000
+
+Windows
+long:          0.0000, lat:        -45.0000
+x   :   -5009377.0857, y  :          0.0000
+
+long:         45.0000, lat:          0.0000
+x   :          0.0000, y  :    5621521.4862
+'''
