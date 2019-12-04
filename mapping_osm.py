@@ -56,14 +56,17 @@ class MapTools:
         self.blit_map()
 
     def add_base_map_osm(self):
+        # TODO check zoom function
         # ctx.add_basemap(self.ax, url=ctx.providers.Stamen.TonerLite)
-        if abs(self.plot_area[1] - self.plot_area[0]) < 100:
-            zoom = 13
+        print(self.plot_area[1], self.plot_area[0])
+        if abs(self.plot_area[1] - self.plot_area[0]) < 30e3:
+            zoom = 'auto'   # was 13
 
         else:
             zoom = 'auto'
 
         try:
+            print(f'zoom: {zoom}')
             basemap, extent = ctx.bounds2img(
                 self.plot_area[0], self.plot_area[2],
                 self.plot_area[1], self.plot_area[3],
