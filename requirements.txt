@@ -24,7 +24,7 @@ munch==2.5.0
 numpy==1.17.4
 packaging==19.2
 pandas==0.25.3
-Pillow==6.2.1
+Pillow>=7.2.1
 pluggy==0.13.1
 psycopg2==2.8.4
 py==1.8.0
